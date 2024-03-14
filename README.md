@@ -38,8 +38,8 @@ terraform plan
 terraform apply
 ```
 
-### Sample lambda configuration that uses private connection (backend lambda)
-This is a serverless framework example.
+### Sample lambda configuration that can use either private connection or data-api
+This is a serverless framework example, the lambda must be in a VPC in order to access mongo.
 * Note that cloudformation and atlas has some race condition issues - so we should create the resources one by one (with depends on the previous one)
 ```yaml
 anchors:

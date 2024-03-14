@@ -5,6 +5,9 @@ This repository provides some modules to ease deployments of various resources.
 ## Full mongo atlas deployment
 The provided Terraform modules enable a full MongoDB Atlas deployment, encompassing a range of configurations aimed at optimizing the integration between AWS and MongoDB Atlas. Key features include:
 
+Available [here](./mongodb_atlas)
+
+
 - **MongoDB Atlas CloudFormation Custom Resources**: Automate the creation of database users and roles using MongoDB Atlas CloudFormation custom resources.
 - **Developer Access Configuration**: Set up IP whitelisting for developers access, including the automatic configuration of NAT Gateway IPs for the Data API IP whitelist.
 - **Private Endpoint Connectivity**: Establish two-way private endpoints between AWS and MongoDB Atlas to allow backend Lambda functions to access the database securely without traversing the public internet.

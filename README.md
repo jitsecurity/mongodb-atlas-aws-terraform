@@ -44,6 +44,10 @@ terraform apply
 ### Sample lambda configuration that can use either private connection or data-api
 This is a serverless framework example, the lambda must be in a VPC in order to access mongo.
 * Note that cloudformation and atlas has some race condition issues - so we should create the resources one by one (with depends on the previous one)
+
+> When using data-api in the lambda, DB user and role are not needed as the current JWT credentials of the user will be used instead of the lambda role.
+
+
 ```yaml
 anchors:
   vpc: &vpc

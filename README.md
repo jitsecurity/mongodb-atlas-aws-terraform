@@ -10,7 +10,7 @@ Available [here](./mongodb_atlas)
 
 - **MongoDB Atlas CloudFormation Custom Resources**: Automate the creation of database users and roles using MongoDB Atlas CloudFormation custom resources.
 - **Developer Access Configuration**: Set up IP whitelisting for developers access, including the automatic configuration of NAT Gateway IPs for the Data API IP whitelist.
-- **Private Endpoint Connectivity**: Establish two-way private endpoints between AWS and MongoDB Atlas to allow backend Lambda functions to access the database securely without traversing the public internet.
+- **Private Endpoint Connectivity**: Establish private endpoints between AWS and MongoDB Atlas to allow backend Lambda functions to access the database securely without traversing the public internet.
 - **IP Whitelisting for Data API**: Although private connectivity for app services was not available at the time of deployment, this setup includes IP whitelisting as a secure alternative.
 - **Alerts and Monitoring**: Configure comprehensive alerts, including pricing alerts, to be delivered to a designated email address. The setup supports adjustments for notifications through Slack and other channels.
 - **Data API Configuration**: Includes full configuration of the Data API, with JWT authentication and filtering mechanisms for tenant separation.

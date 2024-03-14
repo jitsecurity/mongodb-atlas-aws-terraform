@@ -1,5 +1,5 @@
 module "mongo-cf-secret" {
-  source      = "./modules/secret"
+  source      = "../modules/secret"
   secret_name = "cfn/atlas/profile/${var.mongo_atlas.org_id}"
   secret_value = jsonencode({
     PublicKey  = var.mongo_atlas_public_key
@@ -9,7 +9,7 @@ module "mongo-cf-secret" {
 }
 
 module "mongo-cf-activation" {
-  source        = "./modules/cf_public_extension"
+  source        = "../modules/cf_public_extension"
   iam_actions   = ["secretsmanager:GetSecretValue"]
   iam_resources = [module.mongo-cf-secret.secret_arn]
   publisher_id  = var.mongo_atlas.mongo_cloudformation_publisher_id
@@ -19,7 +19,7 @@ module "mongo-cf-activation" {
 }
 
 module "mongodb_atlas" {
-  source                             = "./modules/mongodbatlas"
+  source                             = "../modules/mongodbatlas"
   stage                              = var.mongo_atlas.stage
   organization_id                    = var.mongo_atlas.org_id
   mongo_ip_access_list               = var.mongo_atlas.ip_whitelist

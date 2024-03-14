@@ -13,7 +13,7 @@ The provided Terraform modules enable a full MongoDB Atlas deployment, encompass
 - **Data API Configuration**: Includes full configuration of the Data API, with JWT authentication and filtering mechanisms for tenant separation.
 
 ### Architecture
-![Mongo Atlas Architecture](./mongo-atlas architecture.jpeg)
+![Mongo Atlas Architecture](./mongo-atlas-architecture.jpeg)
 
 
 ### Setup

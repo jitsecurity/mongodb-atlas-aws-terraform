@@ -74,7 +74,7 @@ resource "shell_script" "configure-data-api-security" {
   working_directory = path.module
 }
 
-# Save the data-api URL so we can later use it in the lambdas.
+# Save the data-api URL so we can later use it in the AWS Lambdas.
 resource "aws_ssm_parameter" "data-api-URL" {
   name  = "/${var.stage}/infra/mongodb/data-api/url"
   type  = "String"

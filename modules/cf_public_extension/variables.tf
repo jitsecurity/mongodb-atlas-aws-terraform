@@ -1,11 +1,11 @@
 variable "iam_actions" {
   type        = list(string)
-  description = "IAM permissions required by cloudformation resources in order to provision the resources"
+  description = "IAM permissions required by CloudFormation resources in order to provision the resources"
 }
 
 variable "iam_resources" {
   type        = list(string)
-  description = "IAM permissions required by cloudformation resources in order to provision the resources"
+  description = "IAM permissions required by CloudFormation resources in order to provision the resources"
 }
 
 variable "publisher_id" {

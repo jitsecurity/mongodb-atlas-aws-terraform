@@ -1,12 +1,13 @@
 # Terraform modules and scripts
 
-This repository provides some modules to ease deployments of various resources.
+This repository provides some modules to ease deployments of various resources. It is divided into 2 sections:
+* [modules](./modules "modules"): Terraform modules that can be used to deploy various resources
+* [deployments](./deployments "deployments"): Terraform scripts that use the modules to deploy a full stack
 
-## Full mongo atlas deployment
+Each deployment has an associated README file with instructions on how to deploy it, and with additional information about the resources that are being deployed.
+
+## Full mongo serverless atlas deployment with data-api
 The provided Terraform modules enable a full MongoDB Atlas deployment, encompassing a range of configurations aimed at optimizing the integration between AWS and MongoDB Atlas. Key features include:
-
-Available [here](./mongodb_atlas)
-
 
 - **MongoDB Atlas CloudFormation Custom Resources**: Automate the creation of database users and roles using MongoDB Atlas CloudFormation custom resources.
 - **Developer Access Configuration**: Set up IP whitelisting for developers access, including the automatic configuration of NAT Gateway IPs for the Data API IP whitelist.
@@ -15,85 +16,4 @@ Available [here](./mongodb_atlas)
 - **Alerts and Monitoring**: Configure comprehensive alerts, including pricing alerts, to be delivered to a designated email address. The setup supports adjustments for notifications through Slack and other channels.
 - **Data API Configuration**: Includes full configuration of the Data API, with JWT authentication and filtering mechanisms for tenant separation.
 
-### Architecture
-![Mongo Atlas Architecture](./mongo-atlas-architecture.jpeg)
-
-
-### Setup
-
-To deploy this MongoDB Atlas configuration, follow the steps below:
-
-1. **API Key Generation**:
-   - Navigate to the MongoDB Cloud Console Access Manager at `https://cloud.mongodb.com/v2#/org/<ORG_ID>/access/apiKeys`.
-   - Create a new API key with the "Organization Project Creator" role.
-
-2. **Environment Configuration**:
-   - Ensure AWS is configured with the appropriate credentials and permissions. These should include the ability to enable custom CloudFormation resources, manage secrets and SSM parameters, read VPC configurations, and create private endpoints.
-
-3. **Deployment**:
-   - With the MongoDB Atlas API key pair generated, set them as environment variables and proceed with the Terraform commands to deploy the stack.
-
-```bash
-export TF_VAR_mongo_atlas_public_key=<public_key>
-export TF_VAR_mongo_atlas_private_key=<private_key>
-terraform init
-terraform plan
-terraform apply
-```
-
-### Sample lambda configuration that can use either private connection or data-api
-This is a serverless framework example, the lambda must be in a VPC in order to access mongo.
-* Note that cloudformation and atlas has some race condition issues - so we should create the resources one by one (with depends on the previous one)
-
-> When using data-api in the lambda, DB user and role are not needed as the current JWT credentials of the user will be used instead of the lambda role.
-
-
-```yaml
-anchors:
-  vpc: &vpc
-    securityGroupIds:
-      - ${ssm:/${self:custom.stage}/infra/security_groups/security_group_that_can_access_mongo_private_endpoint, ''}
-    subnetIds: <private_subnets>>
-  mongoEnvironmentVars: &mongoEnvironmentVars
-    CONNECTION_STRING_SSM_URL: /${self:custom.stage}/infra/mongodb/jit/private-endpoint/connection-string    
-    MONGO_API_URL_PATH: /${self:custom.stage}/infra/mongodb/data-api/url
-  mongo: # Some common properties for mongo
-    commonUserProperties: &commonUserProperties
-      AWSIAMType: ROLE
-      ProjectId: ${ssm:/${self:custom.env_name}/infra/mongodb/project-id, ''}
-      Profile: ${ssm:/${self:custom.env_name}/infra/mongodb/organization-id, ''}
-      DatabaseName: "$external"
-    commonRoleProperties: &commonRoleProperties
-      ProjectId: ${ssm:/${self:custom.env_name}/infra/mongodb/project-id, ''}
-      Profile: ${ssm:/${self:custom.env_name}/infra/mongodb/organization-id, ''}
-      
-      
-functions:
-  my-backend-lambda:
-    handler: handler    
-    vpc: *vpc
-    environment: *mongoEnvironmentVars        
-    iamRoleStatementsName: get-docs-role
-    
-Resources:
-   MongoGetRole:
-      Type: MongoDB::Atlas::CustomDBRole
-      Properties:
-        <<: *commonRoleProperties
-        RoleName: atlas-get-docs-role
-        Action: FIND
-        Resources:
-          - Collection: col
-            DB: db
-   
-   GetDocsUser:
-      Type: MongoDB::Atlas::DatabaseUser
-      Properties:
-        <<: *commonUserProperties
-        Username: arn:aws:iam::${aws:accountId}:role/<service-name>-get-docs-role
-        Roles:
-          - RoleName: atlas-get-docs-role
-            DatabaseName: "admin"
-      DependsOn: [ MongoGetRole ]
-
-```
+Run and deploy it [here](./deployments/mongodb_atlas)

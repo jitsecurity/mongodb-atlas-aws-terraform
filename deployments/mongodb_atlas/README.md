@@ -22,7 +22,19 @@ This documentation provides an in-depth look at deploying a full MongoDB Atlas s
 
 ## Architecture Overview
 
-![MongoDB Atlas Architecture](./images/mongo-atlas-architecture.jpeg)
+![MongoDB Atlas Architecture](./images/mongo-and-aws.jpeg)
+
+### Backend connectivity
+For lambdas that don't require data api and JWT connectivity - you can utilize the private endpoint connectivity to connect to the MongoDB Atlas serverless instance. This is done by creating a private endpoint in the VPC and allowing the security groups to access the private endpoint.
+
+![Backend architecture](./images/backend.jpeg)
+
+### User facing APIs connectivity
+For lambdas that your users trigger (with JWT token) - use the data api to connect to the MongoDB Atlas serverless instance. 
+
+- This is done by IP Whitelisting - as at the time of this deployment, private connectivity for app services was not available. [More details](https://www.mongodb.com/docs/atlas/app-services/security/private-endpoints/)
+- There's no need to configure NAT GW IPs, they are obtained and configured automatically
+![Frontend/API architecture](./images/APIfrontend.jpeg)
 
 ## Prerequisites
 - **AWS Account**: You need an AWS account to deploy the resources.
@@ -35,16 +47,16 @@ This documentation provides an in-depth look at deploying a full MongoDB Atlas s
 
 **On US east region**
 
-| Service | Cost                                                                                                                                                                | Description | Links |
-|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|-------|
-| AWS Secret Manager | $0.40 for 1 secret                                                                                                                                                  | Secure storage for Atlas credentials for use with third-party CloudFormation templates. | [Pricing Details](https://aws.amazon.com/secrets-manager/pricing/) |
-| Third-Party AWS CloudFormation Operations | Free for enabling and for 1000 handler operations per month                                                                                                         | Use MongoDB Atlas custom resources like `MongoDB::Atlas::CustomDBRole` and `MongoDB::Atlas::DatabaseUser` in CloudFormation. | [Pricing Details](https://aws.amazon.com/cloudformation/pricing/) |
-| AWS IAM | Free for 1 role                                                                                                                                                     | Enables CloudFormation access to MongoDB credentials in Secret Manager and resource provisioning in Atlas. | - |
-| AWS SSM Parameter Store | Free for standard parameters                                                                                                                                        | Stores Atlas URLs for easy access by other services. | [Pricing Details](https://aws.amazon.com/systems-manager/pricing/#Parameter_Store) |
-| AWS Interface Endpoint | $0.01 per AZ per hour, then depending on usage.                                                                                                                     | Connects backend Lambdas to MongoDB using private subnets without the Data API. | [Pricing Details](https://aws.amazon.com/privatelink/pricing/#Interface_Endpoint_pricing) |
-| MongoDB Atlas Serverless Instance | Free for the instance, then variable according to the usage.                                                                                                        | Free for the instance; data usage determines additional costs. | [Pricing Details](https://www.mongodb.com/docs/atlas/billing/serverless-instance-costs/) |
-| MongoDB Atlas Data API | Free tier: 1,000,000 requests or 500 hours of compute or 10,000 hours of sync runtime (whichever occurs first), 10GB of data transfer, Then according to the usage. | Shared monthly free tier across all App Services Apps in a project. | [Pricing Details](https://www.mongodb.com/docs/atlas/app-services/billing/) |
-| MongoDB Atlas Private Endpoint for Serverless | Free                                                                                                                                                                | Connects to AWS private endpoints. | [Pricing Details](https://www.mongodb.com/docs/atlas/billing/additional-services/#private-endpoints-for-serverless-instances) |
+| Service                                      | Cost                                                                                                                                                                | Description                                                                                                                 | Links |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-------|
+| AWS Secret Manager                           | $0.40 for 1 secret                                                                                                                                                  | Secure storage for Atlas credentials for use with third-party CloudFormation templates.                                     | [Pricing Details](https://aws.amazon.com/secrets-manager/pricing/) |
+| Third-Party AWS CloudFormation Operations    | Free for enabling and for 1000 handler operations per month                                                                                                         | Use MongoDB Atlas custom resources like `MongoDB::Atlas::CustomDBRole` and `MongoDB::Atlas::DatabaseUser` in CloudFormation. | [Pricing Details](https://aws.amazon.com/cloudformation/pricing/) |
+| AWS IAM                                      | Free for 1 role                                                                                                                                                     | Enables CloudFormation access to MongoDB credentials in Secret Manager and resource provisioning in Atlas.                  | - |
+| AWS SSM Parameter Store                      | Free for standard parameters                                                                                                                                        | Stores Atlas URLs for easy access by other services.                                                                        | [Pricing Details](https://aws.amazon.com/systems-manager/pricing/#Parameter_Store) |
+| AWS Interface Endpoint                       | $0.01 per AZ per hour, then depending on usage.                                                                                                                     | Connects backend Lambdas to MongoDB using private subnets without the Data API.                                             | [Pricing Details](https://aws.amazon.com/privatelink/pricing/#Interface_Endpoint_pricing) |
+| MongoDB Atlas Serverless Instance            | Free for the instance, then variable according to the usage.                                                                                                        | Free for the instance; data usage determines additional costs.                                                              | [Pricing Details](https://www.mongodb.com/docs/atlas/billing/serverless-instance-costs/) |
+| MongoDB Atlas Data API                       | Free tier: 1,000,000 requests or 500 hours of compute or 10,000 hours of sync runtime (whichever occurs first), 10GB of data transfer, Then according to the usage. | Shared monthly free tier across all App Services Apps in a project.                                                         | [Pricing Details](https://www.mongodb.com/docs/atlas/app-services/billing/) |
+| MongoDB Atlas Private Endpoint for Serverless | Free                                                                                                                                                                | Connects to AWS private endpoints.                                                                                          | [Pricing Details](https://www.mongodb.com/docs/atlas/billing/additional-services/#private-endpoints-for-serverless-instances) |
 
 ## Deployment Instructions
 

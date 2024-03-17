@@ -23,17 +23,69 @@ This documentation provides an in-depth look at deploying a full MongoDB Atlas s
 ![MongoDB Atlas Architecture](./images/mongo-and-aws.jpeg)
 
 ### Backend connectivity
-For lambdas that don't require data api and JWT connectivity - you can utilize the private endpoint connectivity to connect to the MongoDB Atlas serverless instance. This is done by creating a private endpoint in the VPC and allowing the security groups to access the private endpoint.
+For Lambdas Without Data API and JWT Requirements:
+
+- **Objective:** Connect to MongoDB Atlas serverless via a private endpoint.
+- **Method:** Use VPC private endpoint creation and security group access.
 
 ![Backend architecture](./images/backend.jpeg)
 
-### User facing APIs connectivity
-For lambdas that your users trigger (with JWT token) - use the data api to connect to the MongoDB Atlas serverless instance. 
+- **Implementation Steps:**
+  1. Create a [CustomDBRole and DatabaseUser](#sample-aws-lambda-configuration-that-can-use-either-private-connection-or-data-api), linking them to the IAM role of the target Lambda/container.
+  2. Ensure Lambda/container is within the VPC, private subnets, and `aws_allowed_access_security_groups` includes the resources' security groups.
+  3. Use SSM parameter for the connection string: `/<stage>/infra/mongodb/<instance_name>/private-endpoint/connection-string`.
+  4. Example [pymongo](https://pymongo.readthedocs.io/en/stable/) connection:
+     ```python
+     client = InternalMongoClient(connection_string)
+     my_collection = client["db"]["col"]
+     ```
 
-- This is done by IP Whitelisting - as at the time of this deployment, private connectivity for app services was not available. [More details](https://www.mongodb.com/docs/atlas/app-services/security/private-endpoints/)
-- There's no need to configure NAT GW IPs, they are obtained and configured automatically
+### User facing APIs connectivity
+**For User-Triggered Lambdas:**
+
+- **Objective:** Utilize the Data API for MongoDB Atlas serverless connections - imposing tenant separation using existing users JWT.
+- **Method:** Implement IP Whitelisting due to the absence of private connectivity.
 ![Frontend/API architecture](./images/APIfrontend.jpeg)
 
+- **Implementation Steps:**
+  1. Ensure Lambda/container uses VPC and NAT GWs for outbound IPs.
+  2. Add required IPs to `ip_whitelist` and enable `add_mongo_ips_access_to_data_api`.
+  3. Base URL for Data API calls is fetched from SSM: `/<stage>/infra/mongodb/data-api/url`.
+  4. REST API usage example with JWT:
+  ```bash
+  curl -X POST "<base_url_from_ssm>/action/findOne" \
+       -H "jwtTokenString: token" \
+       -H "Content-Type: application/json" \
+       -d '<JSON_BODY>'
+   ```
+  5. **Retry Logic for Unauthorized Responses:** Implement a decorator for retrying Data API requests encountering 401 errors, due to potential user provisioning delays. This includes a retry count of 3 with a 1-second pause between attempts.
+  ``` python
+  DATA_API_UNAUTHORIZED_REQUESTS_RETRY_COUNT = 3
+  
+  def retry_mongo_data_api_unauthorized_responses() -> Callable[..., Callable[..., Any]]:
+    """
+       This decorator is used to retry mongo data api requests that return 401 (Unauthorized) responses.
+       This is used because of a known race condition when creating a new 'user' in mongo side.
+       We retry 3 times with 1 seconds sleep between each try.
+       """
+    
+    def func_wrapper(func: Callable[..., Any]) -> Callable[..., Any]:
+        @functools.wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            for i in range(DATA_API_UNAUTHORIZED_REQUESTS_RETRY_COUNT):
+                try:
+                    return func(*args, **kwargs)
+                except HTTPError as e:
+                    if e.response.status_code == HTTPStatus.UNAUTHORIZED:
+                        logger.error(f"Failed to get data from mongo data api, retrying. Error: {e}")
+                        sleep(1)
+                        continue
+                    raise e
+
+        return wrapper
+
+    return func_wrapper
+  ```
 ## Prerequisites
 - **AWS Account**: You need an AWS account to deploy the resources.
 - **VPC**: You need a VPC with private subnets to deploy the resources.

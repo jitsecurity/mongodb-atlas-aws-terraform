@@ -200,3 +200,4 @@ Resources:
       DependsOn: [ MongoGetRole ]
 
 ```
+> **Important caveat here** - While working with CloudFormation, there’s a race condition on those resources, so if they are created in parallel (even for different lambdas) - the deployment might fail. To currently solve it, make sure each resource depends on the previous atlas one (a_role -> a_user -> b_role -> b_lambda)

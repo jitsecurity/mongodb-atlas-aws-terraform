@@ -18,8 +18,6 @@ This documentation provides an in-depth look at deploying a full MongoDB Atlas s
 - **AWS IAM Role Configuration**: Configure an IAM role to provide CloudFormation with the necessary permissions for accessing MongoDB credentials in Secret Manager and for the provisioning of resources within Atlas, facilitating secure and automated resource management.
 - **Parameters Management in AWS SSM Parameter Store**: Manage essential AWS parameters within the SSM Parameter Store, simplifying the access and use of Atlas URLs by other services, promoting operational efficiency and inter-service connectivity.
 
-[Explore the Terraform modules](./mongodb_atlas)
-
 ## Architecture Overview
 
 ![MongoDB Atlas Architecture](./images/mongo-and-aws.jpeg)

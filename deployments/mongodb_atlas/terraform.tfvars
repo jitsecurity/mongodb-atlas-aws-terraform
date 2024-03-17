@@ -16,5 +16,6 @@ mongo_atlas = {
     email_notification: "your_email@example.com",
     daily_price_threshold_alert: 10,
     enable_continuous_backup: false,
+    enable_termination_protection: true,
     stage: "test"
 }

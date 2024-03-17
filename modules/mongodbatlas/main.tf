@@ -94,6 +94,7 @@ module "atlas_instance" {
   aws_vpc_id                         = var.aws_vpc_id
   private_subnet_ids                 = var.private_subnet_ids
   aws_allowed_access_security_groups = var.aws_allowed_access_security_groups
+  enable_termination_protection      = var.enable_termination_protection
   jwt_audience                       = var.jwt_audience
   jwt_public_key                     = var.jwt_public_key
   data_api_id                        = shell_script.enable-data-api.output["data_api_id"]

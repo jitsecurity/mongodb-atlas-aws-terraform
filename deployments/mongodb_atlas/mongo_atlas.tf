@@ -33,6 +33,7 @@ module "mongodb_atlas" {
   tenant_id_field_in_jwt             = var.mongo_atlas.tenant_id_field_in_jwt
   notification_email                 = var.mongo_atlas.email_notification
   enable_continuous_backup           = var.mongo_atlas.enable_continuous_backup
+  enable_termination_protection      = var.mongo_atlas.enable_termination_protection
   daily_price_threshold_alert        = var.mongo_atlas.daily_price_threshold_alert
   aws_region                         = local.aws_region
 }

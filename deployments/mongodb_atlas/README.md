@@ -140,6 +140,12 @@ terraform plan
 terraform apply
 ```
 
+### Cleanup
+To clean everything up - you can comment out everything in `mongo_atlas.tf` or run `terraform destroy` for the module.
+
+Before cleaning up, If you enabled `enable_termination_protection` you will need to go through the console to each instance and disable the **termination protection**.
+![Termination protection](./images/termination.png)
+
 ### Sample AWS Lambda configuration that can use either private connection or data-api
 This is a [Serverless Framework](https://www.serverless.com/) example, the AWS Lambda must be in a VPC in order to access mongo.
 * Note that CloudFormation and atlas has some race condition issues - so we should create the resources one by one (with depends on the previous one)

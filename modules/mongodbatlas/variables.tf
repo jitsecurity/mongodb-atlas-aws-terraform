@@ -19,6 +19,11 @@ variable "add_mongo_ips_access_to_data_api" {
   default     = false
 }
 
+variable "enable_termination_protection" {
+    type        = bool
+    description = "Enable termination protection all instances"
+}
+
 variable "mongo_instances" {
   type        = list(string)
   description = "instances to be created - they will all be serverless instances"

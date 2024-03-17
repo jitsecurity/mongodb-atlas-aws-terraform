@@ -17,6 +17,7 @@ variable "mongo_atlas" {
     email_notification               = string
     daily_price_threshold_alert      = number
     enable_continuous_backup         = bool
+    enable_termination_protection    = bool
     stage                            = string
   })
   description = <<EOT
@@ -35,6 +36,7 @@ variable "mongo_atlas" {
       email_notification: "An email address to receive notifications related to MongoDB Atlas, such as alerts.",
       daily_price_threshold_alert: "A numeric value representing the daily cost threshold in dollars that, when exceeded, triggers a pricing alert.",
       enable_continuous_backup: "A boolean flag to enable or disable continuous backups for MongoDB Atlas instances. (Incurs additional costs)",
+      enable_termination_protection: "A boolean flag to enable or disable termination protection for MongoDB Atlas instances.",
       stage: "A string identifier to denote the environment or stage (e.g., development, test, production) for the MongoDB Atlas setup - A project is created for each stage."
     }
   EOT

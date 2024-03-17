@@ -34,7 +34,7 @@ For Lambdas Without Data API and JWT Requirements:
   3. Use SSM parameter for the connection string: `/<stage>/infra/mongodb/<instance_name>/private-endpoint/connection-string`.
   4. Example [pymongo](https://pymongo.readthedocs.io/en/stable/) connection:
      ```python
-     client = InternalMongoClient(connection_string)
+     client = InternalMongoClient(f"{connection_string}/?authSource=%24external&authMechanism=MONGODB-AWS&retryWrites=true&w=majority")
      my_collection = client["db"]["col"]
      ```
 

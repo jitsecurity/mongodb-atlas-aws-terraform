@@ -6,17 +6,14 @@ This guide details a streamlined, one-click Terraform deployment for MongoDB Atl
 ## Key Features and components
 
 - **MongoDB Atlas CloudFormation Custom Resources**: Automate the creation of database users and roles using MongoDB Atlas CloudFormation custom resources, streamlining database management and security.
+  - for more information click [here](https://github.com/mongodb/mongodbatlas-cloudformation-resources) 
 - **Developer Access Configuration**: Implement IP whitelisting for developer access, including the automatic configuration of NAT Gateway IPs for the Data API IP whitelist, ensuring secure developer interactions with MongoDB Atlas.
 - **Private Endpoint Connectivity**: Establish private endpoints between AWS and MongoDB Atlas to allow backend Lambda functions to securely access the database without traversing the public internet, enhancing the security of data access.
 - **IP Whitelisting for Data API**: In lieu of private connectivity for app services at deployment, incorporate IP whitelisting as a secure method of accessing MongoDB Atlas, safeguarding data interactions.
 - **Alerts and Monitoring**: Set up comprehensive alerts, including pricing alerts, to be delivered to a designated email address, with the capability for notification adjustments through Slack and other communication channels.
 - **Data API Configuration**: Fully configure the Data API with JWT authentication and filtering mechanisms for tenant separation, facilitating secure and efficient data access and manipulation.
 - **MongoDB Atlas Project Creation**: Establish a dedicated project within MongoDB Atlas to house serverless instances and the Data API, centralizing resources for streamlined management.
-- **Serverless Instances on MongoDB Atlas**: Deploy one or more serverless instances within MongoDB Atlas, optimized for scalability and operational efficiency, catering to dynamic workload requirements.
-- **Integration of MongoDB Atlas Data API with App Services**: Leverage the MongoDB Atlas Data API to enable seamless access from AWS Lambda functions, enhancing UI/API functionalities with secure JWT token-based authentication.
-- **Custom Resources for MongoDB Atlas via CloudFormation**: Utilize custom CloudFormation resources for the efficient creation and management of database users and roles, further automating database administration tasks.
-- **AWS Secret Manager for MongoDB Atlas Credentials**: Securely manage MongoDB Atlas credentials within AWS Secret Manager, ensuring the safe storage and access of sensitive information for use with third-party CloudFormation templates.
-- **AWS IAM Role Configuration**: Configure an IAM role to provide CloudFormation with the necessary permissions for accessing MongoDB credentials in Secret Manager and for the provisioning of resources within Atlas, facilitating secure and automated resource management.
+- **Serverless Instances on MongoDB Atlas**: Deploy one or more serverless instances within MongoDB Atlas, optimized for scalability and operational efficiency, catering to dynamic workload requirements including AWS Secret Manager secret to assist cloudformation in provisioning atlas resources through CloudFormation.
 - **Parameters Management in AWS SSM Parameter Store**: Manage essential AWS parameters within the SSM Parameter Store, simplifying the access and use of Atlas URLs by other services, promoting operational efficiency and inter-service connectivity.
 
 ## Architecture Overview

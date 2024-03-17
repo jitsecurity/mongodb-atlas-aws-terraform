@@ -1,6 +1,7 @@
 # MongoDB Atlas Serverless Deployment with Data API
 
-This documentation provides an in-depth look at deploying a full MongoDB Atlas serverless instance using the Data API, with a focus on optimizing AWS integration. Our Terraform modules cover a broad spectrum of configurations to enhance your MongoDB Atlas experience.
+
+This guide details a streamlined, one-click Terraform deployment for MongoDB Atlas serverless instances. It includes configurations for private endpoint connections, facilitating secure, non-customer-facing Lambda interactions with MongoDB, and leverages the Data API with JWT token authentication and tenant isolation for customer-facing Lambdas.
 
 ## Key Features and components
 

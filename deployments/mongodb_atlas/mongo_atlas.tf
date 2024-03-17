@@ -1,4 +1,5 @@
 module "mongo-cf-secret" {
+  count = var.mongo_atlas.enable_cloudformation_atlas_resources ? 1 : 0
   source      = "../../modules/secret"
   secret_name = "cfn/atlas/profile/${var.mongo_atlas.org_id}"
   secret_value = jsonencode({
@@ -9,9 +10,10 @@ module "mongo-cf-secret" {
 }
 
 module "mongo-cf-activation" {
+  count = var.mongo_atlas.enable_cloudformation_atlas_resources ? 1 : 0
   source        = "../../modules/cf_public_extension"
   iam_actions   = ["secretsmanager:GetSecretValue"]
-  iam_resources = [module.mongo-cf-secret.secret_arn]
+  iam_resources = [module.mongo-cf-secret[0].secret_arn]
   publisher_id  = var.mongo_atlas.mongo_cloudformation_publisher_id
   custom_resources_types = ["MongoDB::Atlas::CustomDBRole",
   "MongoDB::Atlas::DatabaseUser"]

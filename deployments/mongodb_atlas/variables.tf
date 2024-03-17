@@ -18,6 +18,7 @@ variable "mongo_atlas" {
     daily_price_threshold_alert      = number
     enable_continuous_backup         = bool
     enable_termination_protection    = bool
+    enable_cloudformation_atlas_resources = bool
     stage                            = string
   })
   description = <<EOT
@@ -37,6 +38,7 @@ variable "mongo_atlas" {
       daily_price_threshold_alert: "A numeric value representing the daily cost threshold in dollars that, when exceeded, triggers a pricing alert.",
       enable_continuous_backup: "A boolean flag to enable or disable continuous backups for MongoDB Atlas instances. (Incurs additional costs)",
       enable_termination_protection: "A boolean flag to enable or disable termination protection for MongoDB Atlas instances.",
+      enable_cloudformation_atlas_resources: "A boolean flag to enable or disable the creation of MongoDB Atlas resources within AWS CloudFormation.",
       stage: "A string identifier to denote the environment or stage (e.g., development, test, production) for the MongoDB Atlas setup - A project is created for each stage."
     }
   EOT

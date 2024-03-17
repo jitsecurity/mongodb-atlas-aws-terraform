@@ -17,5 +17,6 @@ mongo_atlas = {
     daily_price_threshold_alert: 10,
     enable_continuous_backup: false,
     enable_termination_protection: true,
+    enable_cloudformation_atlas_resources: true,
     stage: "test"
 }

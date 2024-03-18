@@ -6,7 +6,7 @@ variable "org_id" {
 
 variable "mongo_cloudformation_publisher_id" {
   type        = string
-  description = "The publisher ID for MongoDB Atlas resources within AWS CloudFormation, enabling integration and resource management. Keep the default value."
+  description = "The publisher ID for MongoDB Atlas resources within AWS CloudFormation, enabling integration and resource management. Keep the default value unless changed by AWS/MongoDB."
   default = "bb989456c78c398a858fef18f2ca1bfc1fbba082"
 }
 
@@ -47,7 +47,6 @@ variable "security" {
     }))
   })
   description = <<EOT
-    Security related configurations:
     aws_vpc_id: "The ID of your AWS VPC where MongoDB Atlas resources will interact with AWS resources.",
     private_subnet_ids: "A list of subnet IDs within your AWS VPC designated for MongoDB Atlas resource connectivity.",
     aws_allowed_access_security_groups: "A list of AWS security group IDs permitted access to MongoDB Atlas resources. (for example - your lambdas)"
@@ -64,7 +63,6 @@ variable "data_api_jwt_configurations" {
     add_mongo_ips_access_to_data_api  = bool
   })
   description = <<EOT
-    Data API JWT configurations:
     jwt_audience: "The 'aud' (audience) claim identifying the recipients that the JWT is intended for.",
     jwt_public_key: "The public key used to verify the signature of JWTs, ensuring the tokens are valid and issued by a trusted authority.",
     tenant_id_field_in_jwt: "The specific field within the JWT payload used to identify the tenant in multi-tenancy architectures.",
@@ -79,7 +77,6 @@ variable "alerts" {
     daily_price_threshold_alert = number
   })
   description = <<EOT
-    Alert configurations:
     email_notification: "An email address to receive notifications related to MongoDB Atlas, such as alerts.",
     daily_price_threshold_alert: "A numeric value representing the daily cost threshold in dollars that, when exceeded, triggers a pricing alert."
   EOT

@@ -7,16 +7,17 @@ mongo_atlas = {
       }],
     instances: ["my-instance"],
     aws_vpc_id: "YOUR_VPC_ID",
-    private_subnet_ids: ["SUBNET_ID1", "SUBNET_ID2"],
+    private_subnet_ids: ["YOUR_SUBNET_ID"],
     add_mongo_ips_access_to_data_api: true,
-    aws_allowed_access_security_groups: ["sg-XXXXXXX"],
-    jwt_audience: "YOUR_EXISTING_JWT_AUDIENCE",
+    aws_allowed_access_security_groups: ["YOUR_SECURITY_GROUP_ID"],
+    jwt_audience: "aud",
     jwt_public_key: "-----BEGIN PUBLIC KEY-----\nXXXX\nYYY\n-----END PUBLIC KEY-----\n",
     tenant_id_field_in_jwt: "tenantId",
+    display_name_field_in_jwt: "sub",
     email_notification: "your_email@example.com",
     daily_price_threshold_alert: 10,
     enable_continuous_backup: false,
     enable_termination_protection: true,
-    enable_cloudformation_atlas_resources: true,
-    stage: "test"
+    stage: "test",
+    enable_cloudformation_atlas_resources: false
 }

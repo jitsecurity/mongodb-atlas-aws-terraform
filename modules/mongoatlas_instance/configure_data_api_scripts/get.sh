@@ -106,9 +106,10 @@ if [ -z "$res" ]; then
   exit 1
 fi
 
-myjson=$(append_to_json "" "service_data" "$(echo -n "$res")")
 service_id=$(echo "$res" | jq -r '._id')
+service_name=$(echo "$res" | jq -r '.name')
 myjson=$(append_to_json "$myjson" "service_id" "$service_id")
+myjson=$(append_to_json "$myjson" "service_name" "$service_name")
 
 echo "Searching for existing secret jwt-public-key: $PROJECT_ID" >&2
 path="groups/$PROJECT_ID/apps/$APP_ID/secrets"
@@ -137,9 +138,16 @@ if [ -z "$res" ]; then
   exit 1
 fi
 
-myjson=$(append_to_json "$myjson" "auth_provider_result" "$(echo -n "$res")")
 auth_provider_id=$(echo "$res" | jq -r '._id')
-myjson=$(append_to_json "$myjson" "auth_provider_id" "$auth_provider_id")
+
+# Use the auth provider id we found to save the full configurations to state
+path="groups/$PROJECT_ID/apps/$APP_ID/auth_providers/$auth_provider_id"
+res=$(try_get $path)
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+myjson=$(append_to_json "$myjson" "jwt_provider_result" "$(echo -n "$res")")
 
 # We created the default rule before, so we just need to update it.
 echo "Getting the default rule..." >&2
@@ -155,4 +163,5 @@ fi
 
 # This will be saved to state, full json
 myjson=$(append_to_json "$myjson" "default_rule_result" "$(echo -n "$res")")
+
 echo $myjson

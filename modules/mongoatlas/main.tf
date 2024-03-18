@@ -100,4 +100,5 @@ module "atlas_instance" {
   data_api_id                        = shell_script.enable-data-api.output["data_api_id"]
   enable_continuous_backup           = var.enable_continuous_backup
   tenant_id_field_in_jwt             = var.tenant_id_field_in_jwt
+  display_name_field_in_jwt          = var.display_name_field_in_jwt
 }

@@ -1,11 +1,11 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
 
 provider "mongodbatlas" {
   private_key = var.mongo_atlas_private_key
   public_key  = var.mongo_atlas_public_key
-  region      = "us-east-1"
+  region      = var.region
 }
 
 # Setup auth for mongo management rest API

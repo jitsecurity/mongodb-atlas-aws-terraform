@@ -9,7 +9,3 @@ output "name" {
 output "endpoint_service_name" {
   value = var.service_name
 }
-
-output "endpoint_id" {
-  value = var.endpoint_id
-}

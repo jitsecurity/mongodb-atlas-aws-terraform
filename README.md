@@ -268,12 +268,9 @@ State parameters:
 ```
 
 #### Shell Script: configure-data-api-security
-Facilitates Data API setup for serverless instances with JWT authentication and tenant separation rules.
+Sets the IP whitelist for the Data API, allowing access to the designated IP addresses, Automatically adds the Nat Gateway IPs to the whitelist.
 
-- **default_rule_result**: Default rule set for tenant separation across collections.
-- **jwt_provider_result**: JWT provider config, detailing audience, public key, and field mappings.
-- **secret_id**, **secret_name**: Identify the public key used by your JWT provider.
-- **service_id**, **service_name**: Designate the serverless instance with Data API enabled.
+- **allowed_ips**: The IP addresses allowed to access the Data API.
 
 ``` json
 {

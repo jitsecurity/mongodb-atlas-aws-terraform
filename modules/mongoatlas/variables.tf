@@ -40,7 +40,7 @@ variable "private_subnet_ids" {
 }
 
 # We are using it to create data-api, data.aws_region.current.name somehow forces a change to the shell script
-# so we'll put it hard coded.
+# so we'll pre-configure it.
 variable "aws_region" {
   type    = string
   default = "us-east-1"
@@ -48,23 +48,28 @@ variable "aws_region" {
 
 variable "aws_allowed_access_security_groups" {
   type = list(string)
+  description = "A list of AWS security group IDs permitted access to MongoDB Atlas resources. (for example - your lambdas)"
 }
 
 variable "enable_continuous_backup" {
   type    = bool
   default = false
+  description = "Enable continuous backup for the cluster"
 }
 
 variable "jwt_audience" {
   type = string
+  description = "The audience of the JWT token"
 }
 
 variable "jwt_public_key" {
   type = string
+  description = "The public key to verify the JWT token"
 }
 
 variable "notification_email" {
   type        = string
+  description = "The email to send alerts to"
 }
 
 variable "daily_price_threshold_alert" {

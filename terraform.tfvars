@@ -6,9 +6,9 @@ enable_cloudformation_atlas_resources = false
 stage                                 = "test"
 
 security                              = jsonencode({
-  aws_vpc_id                        = "YOUR_VPC_ID",
-  private_subnet_ids                = ["YOUR_SUBNET_ID"],
-  aws_allowed_access_security_groups = ["YOUR_SECURITY_GROUP_ID"],
+  aws_vpc_id                        = "vpc-xxxxxxx",
+  private_subnet_ids                = ["subnet-aaa", "subnet-bbb"],
+  aws_allowed_access_security_groups = ["sg-xxxxxx"],
   ip_whitelist                      = [
     {
       cidr        = "1.1.1.1/32",

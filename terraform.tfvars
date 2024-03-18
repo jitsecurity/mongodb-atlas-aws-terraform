@@ -9,7 +9,7 @@ mongo_atlas = {
     aws_vpc_id: "YOUR_VPC_ID",
     private_subnet_ids: ["YOUR_SUBNET_ID"],
     add_mongo_ips_access_to_data_api: true,
-    aws_allowed_access_security_groups: ["YOUR_SECURITY_GROUP"],
+    aws_allowed_access_security_groups: ["YOUR_SECURITY_GROUP_ID"],
     jwt_audience: "aud",
     jwt_public_key: "-----BEGIN PUBLIC KEY-----\nXXXX\nYYY\n-----END PUBLIC KEY-----\n",
     tenant_id_field_in_jwt: "tenantId",

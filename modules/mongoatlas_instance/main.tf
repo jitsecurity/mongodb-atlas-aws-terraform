@@ -26,7 +26,6 @@ module "third_party_vpc_endpoint" {
   vpc_id                         = var.aws_vpc_id
   subnet_ids                     = var.private_subnet_ids
   allowed_access_security_groups = var.aws_allowed_access_security_groups
-  stage                          = var.stage
 }
 
 # This configures the vpc in mongo side

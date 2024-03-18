@@ -101,9 +101,9 @@ You will then let it run for 1 month. Your charges would be calculated as follow
 * 1GB of data transfer: 0.10$ per GB = 0.01$ per GB on same region: 0.01$
 * 1GB of write processing units on atlas: ~1.25$ per 1 million WPU = ~1.31$
 * 1GB of data transfer using data-api (if used) - Free (on monthly free tier)
-* Continuous backup for 1GB: around 0.14$ per GB = 0.14$
+* Continuous backup for 1GB: around 0.20$ per GB = 0.20$
 
-Monthly total: **7.3$ + 0.01$ + 1.31$ + 0.14$ = 8.76**
+Monthly total: **7.3$ + 0.01$ + 1.31$ + 0.20$ = 8.82**
 </details>
 
 | Service                                       | Cost                                                                                                                                                                | Description                                                                                                                  | Links |

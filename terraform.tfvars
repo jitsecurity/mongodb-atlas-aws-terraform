@@ -1,15 +1,15 @@
 mongo_atlas = {
-    org_id: "639b3e430709e57f49adca31",
+    org_id: "YOUR_ORG_ID",
     mongo_cloudformation_publisher_id: "bb989456c78c398a858fef18f2ca1bfc1fbba082",
     ip_whitelist:     [{
       cidr        = "1.1.1.1/32"
       description = "my IP"
       }],
     instances: ["my-instance"],
-    aws_vpc_id: "vpc-0fa423ff6dc4f52e9",
-    private_subnet_ids: ["subnet-0b75827734a80d0d3"],
+    aws_vpc_id: "YOUR_VPC_ID",
+    private_subnet_ids: ["YOUR_SUBNET_ID"],
     add_mongo_ips_access_to_data_api: true,
-    aws_allowed_access_security_groups: ["sg-02734dc05bb87697e"],
+    aws_allowed_access_security_groups: ["YOUR_SECURITY_GROUP"],
     jwt_audience: "aud",
     jwt_public_key: "-----BEGIN PUBLIC KEY-----\nXXXX\nYYY\n-----END PUBLIC KEY-----\n",
     tenant_id_field_in_jwt: "tenantId",

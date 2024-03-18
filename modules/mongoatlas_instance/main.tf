@@ -6,7 +6,7 @@ resource "mongodbatlas_serverless_instance" "database_instance" {
   provider_settings_backing_provider_name = "AWS"
   provider_settings_provider_name         = "SERVERLESS"
   provider_settings_region_name           = replace(upper(var.aws_region), "-", "_")
-  termination_protection_enabled          = var.enable_continuous_backup
+  termination_protection_enabled          = var.enable_termination_protection
   continuous_backup_enabled               = var.enable_continuous_backup
 
 }

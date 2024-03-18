@@ -29,11 +29,11 @@ module "mongodb_atlas" {
   aws_vpc_id                         = var.security.aws_vpc_id
   private_subnet_ids                 = var.security.private_subnet_ids
   aws_allowed_access_security_groups = var.security.aws_allowed_access_security_groups
-  jwt_audience                       = var.data_api_jwt_configurations.jwt_audience
-  jwt_public_key                     = var.data_api_jwt_configurations.jwt_public_key
-  tenant_id_field_in_jwt             = var.data_api_jwt_configurations.tenant_id_field_in_jwt
-  display_name_field_in_jwt          = var.data_api_jwt_configurations.display_name_field_in_jwt
-  add_mongo_ips_access_to_data_api   = var.data_api_jwt_configurations.add_mongo_ips_access_to_data_api
+  jwt_audience                       = var.data_api_configurations.jwt_audience
+  jwt_public_key                     = var.data_api_configurations.jwt_public_key
+  tenant_id_field_in_jwt             = var.data_api_configurations.tenant_id_field_in_jwt
+  display_name_field_in_jwt          = var.data_api_configurations.display_name_field_in_jwt
+  add_mongo_ips_access_to_data_api   = var.data_api_configurations.add_mongo_ips_access_to_data_api
   notification_email                 = var.alerts.email_notification
   daily_price_threshold_alert        = var.alerts.daily_price_threshold_alert
   enable_continuous_backup           = var.enable_continuous_backup

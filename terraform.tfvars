@@ -17,7 +17,7 @@ security                              = {
   ]
 }
 
-data_api_jwt_configurations           = {
+data_api_configurations           = {
   jwt_audience              : "aud",
   jwt_public_key            : "-----BEGIN PUBLIC KEY-----\nXXXX\nYYY\n-----END PUBLIC KEY-----\n",
   tenant_id_field_in_jwt    : "tenantId",

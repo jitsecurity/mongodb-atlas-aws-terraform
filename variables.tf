@@ -54,7 +54,7 @@ variable "security" {
   EOT
 }
 
-variable "data_api_jwt_configurations" {
+variable "data_api_configurations" {
   type = object({
     jwt_audience              = string
     jwt_public_key            = string

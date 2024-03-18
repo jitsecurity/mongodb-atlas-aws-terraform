@@ -15,6 +15,11 @@ variable "aws_account_id" {
   type = string
 }
 
+variable "enable_termination_protection" {
+    type        = bool
+    description = "Enable termination protection for the instance"
+}
+
 # We are using it to create data-api, sdata.aws_region.current.name somehow forces a change to the shell script
 # so we'll put it hard coded.
 variable "aws_region" {

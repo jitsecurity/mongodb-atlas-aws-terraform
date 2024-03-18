@@ -6,7 +6,7 @@ resource "mongodbatlas_serverless_instance" "database_instance" {
   provider_settings_backing_provider_name = "AWS"
   provider_settings_provider_name         = "SERVERLESS"
   provider_settings_region_name           = replace(upper(var.aws_region), "-", "_")
-  termination_protection_enabled          = true
+  termination_protection_enabled          = var.enable_continuous_backup
   continuous_backup_enabled               = var.enable_continuous_backup
 
 }
@@ -51,7 +51,7 @@ data "mongodbatlas_serverless_instance" "aws_private_connection" {
 # Trick #2 - in order not to cause recreation of the resources below, we are defining a local variable.
 # If the instance itself doesn't yet have the private ep url, we are taking it from data source.
 # if it has (2nd and further deploys) - we are taking it from the resource itself.
-# this will not cause recreation of the ssm and lambda below.
+# this will not cause recreation of the ssm and AWS Lambda below.
 locals {
   private_connection_string = coalesce(
     mongodbatlas_serverless_instance.database_instance.connection_strings_private_endpoint_srv != null ?
@@ -61,7 +61,7 @@ locals {
   )
 }
 
-# Save the private EP URL - this will be used in lambdas with pymongo proxy.
+# Save the private EP URL - this will be used in AWS Lambdas with pymongo proxy.
 resource "aws_ssm_parameter" "private-endpoint-connection-string" {
   name  = "/${var.stage}/infra/mongodb/${mongodbatlas_serverless_instance.database_instance.name}/private-endpoint/connection-string"
   type  = "String"

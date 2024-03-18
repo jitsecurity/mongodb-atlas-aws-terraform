@@ -40,6 +40,11 @@ variable "tenant_id_field_in_jwt" {
   description = "The field in the JWT that contains the tenant ID"
 }
 
+variable "display_name_field_in_jwt" {
+    type        = string
+    description = "The field in the JWT that identifies the display name of the user (to be shown in the console)"
+}
+
 variable "aws_allowed_access_security_groups" {
   type = list(string)
 }

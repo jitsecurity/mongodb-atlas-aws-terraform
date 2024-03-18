@@ -14,6 +14,7 @@ variable "mongo_atlas" {
     jwt_audience                     = string
     jwt_public_key                   = string
     tenant_id_field_in_jwt           = string
+    display_name_field_in_jwt        = string
     email_notification               = string
     daily_price_threshold_alert      = number
     enable_continuous_backup         = bool
@@ -34,6 +35,7 @@ variable "mongo_atlas" {
       jwt_audience: "The 'aud' (audience) claim identifying the recipients that the JWT is intended for.",
       jwt_public_key: "The public key used to verify the signature of JWTs, ensuring the tokens are valid and issued by a trusted authority.",
       tenant_id_field_in_jwt: "The specific field within the JWT payload used to identify the tenant in multi-tenancy architectures.",
+      display_name_field_in_jwt: "The specific field within the JWT payload used to identify the string to show in the data-api console as the user ID.",
       email_notification: "An email address to receive notifications related to MongoDB Atlas, such as alerts.",
       daily_price_threshold_alert: "A numeric value representing the daily cost threshold in dollars that, when exceeded, triggers a pricing alert.",
       enable_continuous_backup: "A boolean flag to enable or disable continuous backups for MongoDB Atlas instances. (Incurs additional costs)",
@@ -54,4 +56,10 @@ variable "mongo_atlas_private_key" {
   description = "Secret value for your API key defined here https://cloud.mongodb.com/v2#/org/<org-id>/access/apiKeys"
   type = string
   sensitive = true
+}
+
+variable "region" {
+    description = "The AWS region to deploy the solution."
+    type = string
+    default = "us-east-1"
 }

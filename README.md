@@ -37,7 +37,7 @@ Follow these steps to deploy your MongoDB Atlas serverless instance:
 - Ensure AWS credentials and permissions are properly configured to enable custom CloudFormation resources, manage secrets and SSM parameters, read VPC configurations, and create private endpoints.
 
 ### 3. Setup your variables
-- Fill in the required parameters in the `terraform.tfvars` file, Their descriptions is available in the `variables.tf` file.
+- Fill in the required parameters in the `terraform.tfvars` file, their descriptions is available in the `variables.tf` file.
 - Most importantly - obtain the following:
   - **organization_id**: Atlas organization to deploy into. from https://cloud.mongodb.com/v2#/preferences/organizations
   - **aws_vpc_id**: The VPC ID where the private endpoint will be configured.
@@ -45,8 +45,8 @@ Follow these steps to deploy your MongoDB Atlas serverless instance:
   - **aws_allowed_access_security_groups**: The security groups that will be allowed to access the private endpoint and to MongoDB Atlas.
   - **jwt_audience**: The audience for the JWT token used by your users.
   - **jwt_public_key**: The public key used to verify the JWT token.
-  - **tenant_id_field_in_jwt**: The field in the JWT token that contains the tenant ID, This field is applied to all data-api requests as a field filter.
-  - **display_name_field_in_jwt**: The field in the JWT token that contains the display name of the user, Choose a value that will let you identify the user easily in the atlas console.
+  - **tenant_id_field_in_jwt**: The field in the JWT token that contains the tenant ID, this field is applied to all data-api requests as a field filter.
+  - **display_name_field_in_jwt**: The field in the JWT token that contains the display name of the user, choose a value that will let you identify the user easily in the atlas console.
 
 ### 4. Deployment Process
 Set your MongoDB Atlas API key pair as environment variables and execute the Terraform commands:
@@ -62,7 +62,7 @@ terraform apply
 ### Cleanup
 To clean everything up - you can comment out everything in `mongo_atlas.tf` or run `terraform destroy` for the module.
 
-Before cleaning up, If you enabled `enable_termination_protection` you will need to go through the console to each instance and disable the **termination protection**.
+Before cleaning up, if you enabled `enable_termination_protection` you will need to go through the console to each instance and disable the **termination protection**.
 ![Termination protection](./images/termination.png)
 
 
@@ -72,10 +72,10 @@ Before cleaning up, If you enabled `enable_termination_protection` you will need
 
 ## Cost Breakdown
 
-The cost of deploying MongoDB Atlas serverless instances with the Data API and private endpoint connectivity sums up to few dollars, Let's see some examples (rough estimations for usage)
+The cost of deploying MongoDB Atlas serverless instances with the Data API and private endpoint connectivity sums up to few dollars. Let's see some examples (rough estimations for usage)
 
 <details>
-<summary><b>Example 1</b>: 1 Serverless instance with CloudFormation Atlas resources, on 2 AWS availability zones, Without any usage or continuous backup</summary>
+<summary><b>Example 1</b>: 1 Serverless instance with CloudFormation Atlas resources, on 2 AWS availability zones, without any usage or continuous backup</summary>
 
 Let's assume you will deploy the resources on aws - US east 1 region, and you will enable custom CloudFormation resources to provision DB users and roles through cloudformation (as seen [here](https://github.com/mongodb/mongodbatlas-cloudformation-resources)).
 You will deploy the solution on 2 AWS availability zones.
@@ -101,9 +101,9 @@ You will then let it run for 1 month. Your charges would be calculated as follow
 * 1GB of data transfer: 0.10$ per GB = 0.01$ per GB on same region: 0.01$
 * 1GB of write processing units on atlas: ~1.25$ per 1 million WPU = ~1.31$
 * 1GB of data transfer using data-api (if used) - Free (on monthly free tier)
-* Continuous backup for 1GB: around 0.14$ per GB = 0.14$
+* Continuous backup for 1GB: around 0.20$ per GB = 0.20$
 
-Monthly total: **7.3$ + 0.01$ + 1.31$ + 0.14$ = 8.76**
+Monthly total: **7.3$ + 0.01$ + 1.31$ + 0.20$ = 8.82**
 </details>
 
 | Service                                       | Cost                                                                                                                                                                | Description                                                                                                                  | Links |

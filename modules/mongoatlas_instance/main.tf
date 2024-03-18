@@ -98,7 +98,7 @@ resource "shell_script" "configure-data-api" {
     FRONTEGG_PUBLIC_KEY                      = replace(var.jwt_public_key, "\n", "\\n")
     FRONTEGG_AUD                             = var.jwt_audience
     TENANT_ID_FIELD_IN_JWT                   = var.tenant_id_field_in_jwt
-    APP_SERVICES_USER_DISPLAY_FIELD_FROM_JWT = "sub" # Replace with other fields if necessary
+    APP_SERVICES_USER_DISPLAY_FIELD_FROM_JWT = var.display_name_field_in_jwt
   }
 
   lifecycle_commands {

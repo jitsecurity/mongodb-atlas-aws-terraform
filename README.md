@@ -2,6 +2,8 @@
 
 This guide details a streamlined, one-click Terraform deployment for MongoDB Atlas serverless instances. It includes configurations for private endpoint connections, facilitating secure, non-customer-facing Lambda interactions with MongoDB, and leverages the Data API with JWT token authentication and tenant isolation for customer-facing Lambdas.
 
+The full blogpost about this repo can be found [here.](https://www.jit.io/blog/enhance-mongodb-security-for-atlas-with-scalable-tenant-isolation)
+
 ## Key Features and components
 
 - **MongoDB Atlas CloudFormation Custom Resources**: Automate the creation of database users and roles using MongoDB Atlas CloudFormation custom resources, streamlining database management and security.
